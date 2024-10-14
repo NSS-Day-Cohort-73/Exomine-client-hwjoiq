@@ -1,5 +1,5 @@
 import { renderHtml } from "./renderDom.js"
 
-const mainContainer = document.getElementById("#container")
+const mainContainer = document.querySelector("#container")
 
 mainContainer.innerHTML = renderHtml()
