@@ -1,4 +1,8 @@
-export const renderHtml = () => {
+import { renderGovernors } from "./Governor.js"
+
+export const renderHtml = async () => {
+    const governorList = await renderGovernors()
+
     return `
         <header>
             <h1 id="title">Solar System Mining Marketplace</h1>
@@ -8,7 +12,7 @@ export const renderHtml = () => {
             <div id="choices__colony">
                 <article id="choices">
                     <section id="governor__dropdown">
-                        ${/*Governor Dropdown*/ ''}
+                        Choose a governor ${governorList}
                     </section>
 
                     <section id="facility__dropdown">
