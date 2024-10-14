@@ -2,4 +2,6 @@ import { renderHtml } from "./renderDom.js"
 
 const mainContainer = document.querySelector("#container")
 
-mainContainer.innerHTML = renderHtml()
+const render = await renderHtml()
+
+mainContainer.innerHTML = render
