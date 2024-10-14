@@ -8,7 +8,7 @@ export const renderHtml = async () => {
             <h1 id="title">Solar System Mining Marketplace</h1>
         </header>
         
-        <main id="mainContainer>
+        <main id="mainContainer">
             <div id="choices__colony">
                 <article id="choices">
                     <section id="governor__dropdown">
