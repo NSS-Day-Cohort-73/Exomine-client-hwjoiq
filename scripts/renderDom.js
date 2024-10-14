@@ -1,7 +1,9 @@
+import { renderFacilities } from "./Facility.js"
 import { renderGovernors } from "./Governor.js"
 
 export const renderHtml = async () => {
     const governorList = await renderGovernors()
+    const facilityList = await renderFacilities()
 
     return `
         <header>
@@ -16,7 +18,7 @@ export const renderHtml = async () => {
                     </section>
 
                     <section id="facility__dropdown">
-                        ${/*Facility Dropdown*/ ''}
+                        Choose a facility ${facilityList}
                     </section>
                 </article>
                 
