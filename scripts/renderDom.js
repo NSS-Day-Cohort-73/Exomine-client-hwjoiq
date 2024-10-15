@@ -24,7 +24,7 @@ export const renderHtml = async () => {
                 
                 <article id="mineral__colonies">
                     <h3 id="colony__name">Colony Minerals</h3>
-                    ${/*Minerals in the colony*/ ''}
+                    <section id="colony__minerals"></section>
                 </article>
             </div> 
 
