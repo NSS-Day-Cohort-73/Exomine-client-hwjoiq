@@ -1,11 +1,42 @@
-const state = {
-
+const transientState = {
+    facilityId: 0,
+    colonyId: 0,
+    mineralId: 0,
+    colonyCount: 0,
+    facilityCount: 0
 }
 
 export const setFacility = (facilityId) => {
-    state.selectedFacility = facilityId
+    transientState.facilityId = facilityId
     document.dispatchEvent(new CustomEvent("stateChanged"))
 }
+
+export const setColony = (colonyId) => {
+    transientState.colonyId = colonyId
+    document.dispatchEvent(new CustomEvent("stateChanged"))
+}
+
+export const setMineral = (mineralId) => {
+    transientState.mineralId = mineralId
+    document.dispatchEvent(new CustomEvent("stateChanged"))
+}
+
+export const colonyCount = (colonyCount) => {
+    transientState.colonyCount = colonyCount
+}
+
+export const facilityCount = (facilityCount) => {
+    transientState.facilityCount = facilityCount
+}
+
+export const increaseCount = () => {
+    transientState.colonyCount ++
+}
+
+export const decreaseCount = () => {
+    transientState.facilityCount --
+}
+
 
 export const purchaseMineral = () => {
     /*
