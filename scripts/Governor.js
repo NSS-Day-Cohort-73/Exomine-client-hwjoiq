@@ -5,7 +5,7 @@ export const renderGovernors = async () => {
     let governorsHtml = `<select name="governors"> <option value="">Choose a Governor...</option>`
 
     governorsHtml += governors.filter(governor => governor.activeStatus).map((governor) => {
-        return `<option value="${governor.id}">${governor.name}</option>`
+        return `<option data-colonyid="${governor.colonyId}" value="${governor.id}">${governor.name}</option>`
         }).join("") 
 
     governorsHtml += `</select>`
