@@ -1,4 +1,5 @@
 import { renderColonyMinerals } from "./ColonyMinerals.js"
+import { setColony } from "./TransientState.js"
 
 export const renderGovernors = async () => {
     const governors = await fetch("http://localhost:8088/governors?_expand=colony").then (res => res.json())
@@ -26,5 +27,6 @@ const governorChoice = async (changeEvent) => {
             colonyName: selectedGovernor.dataset.colonyname
         }
         colonyMinerals.innerHTML = await renderColonyMinerals(governorData)
+        setColony(governorData.colonyId)
     }
 }
