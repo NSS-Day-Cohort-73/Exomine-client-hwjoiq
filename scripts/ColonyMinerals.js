@@ -7,7 +7,7 @@ export const renderColonyMinerals = async (governorData) => {
     let colonyHtml = colonies.map((colony) => {
         
             return `
-            <p>${colony.mineral.name}</p>`
+            <p>${colony.count} tons of ${colony.mineral.name}</p>`
     }).join("")
 
     return colonyHtml
