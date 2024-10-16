@@ -3,6 +3,9 @@ export const renderFacilityMinerals = async (facilityId) => {
         .then(res => res.json());
 
     let mineralsHtml = facilityMinerals.map(mineral => {
+
+        const disableBtn = mineral.count === 0 ? 'disabled' : ''
+
         return `
             <div>
                 <input type="radio" name="mineral" id="mineral-${mineral.mineral.id}" value="${mineral.mineral.id}">
