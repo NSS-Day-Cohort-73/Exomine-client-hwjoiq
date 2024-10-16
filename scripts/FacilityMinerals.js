@@ -1,11 +1,16 @@
+import { renderSpaceCart } from "./SpaceCart.js";
+
 export const renderFacilityMinerals = async (facilityId) => {
-    const facilityMinerals = await fetch(`http://localhost:8088/facilityMinerals?facilityId=${facilityId}&_expand=mineral`)
+    const facilityMinerals = await fetch(`http://localhost:8088/facilityMinerals?facilityId=${facilityId}&_expand=mineral&_expand=facility`)
         .then(res => res.json());
+       
+         document.addEventListener("change", mineralChoice)
 
     let mineralsHtml = facilityMinerals.map(mineral => {
         return `
             <div>
-                <input type="radio" name="mineral" id="mineral-${mineral.mineral.id}" value="${mineral.mineral.id}">
+                <input type="radio" name="mineral" id="mineral-${mineral.mineral.id}" value="${mineral.mineral.id}" 
+                data-mineralname="${mineral.mineral.name}" data-facilityname="${mineral.facility.name}">
                 ${mineral.count} tons of ${mineral.mineral.name}
             </div>`;
     }).join("");
@@ -28,3 +33,11 @@ export const displayFacilityMinerals = async (facilityId) => {
     mineralsSection.innerHTML = await renderFacilityMinerals(facilityId);
 };
 
+
+const mineralChoice = (changeEvent) => {
+    if (changeEvent.target.name === "mineral") {
+        const targetMineral = changeEvent.target.dataset.mineralname
+        const targetFacilityName = changeEvent.target.dataset.facilityname
+        renderSpaceCart(targetMineral, targetFacilityName)
+    }
+}

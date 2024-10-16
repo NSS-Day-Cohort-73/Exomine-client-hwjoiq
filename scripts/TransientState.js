@@ -1,45 +1,80 @@
-const transientState = {
-    facilityId: 0,
+const colonyState = {
     colonyId: 0,
     mineralId: 0,
-    colonyCount: 0,
-    facilityCount: 0
+    count: 0
+}
+
+const facilityState = {
+    facilityId: 0,
+    mineralId: 0,
+    count: 0
 }
 
 export const setFacility = (facilityId) => {
-    transientState.facilityId = facilityId
-    document.dispatchEvent(new CustomEvent("stateChanged"))
+    facilityState.facilityId = facilityId
 }
 
 export const setColony = (colonyId) => {
-    transientState.colonyId = colonyId
-    document.dispatchEvent(new CustomEvent("stateChanged"))
+    colonyState.colonyId = colonyId
 }
 
 export const setMineral = (mineralId) => {
-    transientState.mineralId = mineralId
-    document.dispatchEvent(new CustomEvent("stateChanged"))
+    colonyState.mineralId = mineralId
+    facilityState.mineralId = mineralId
 }
 
 export const colonyCount = (colonyCount) => {
-    transientState.colonyCount = colonyCount
+    colonyState.count = colonyCount
 }
 
 export const facilityCount = (facilityCount) => {
-    transientState.facilityCount = facilityCount
-}
-
-export const increaseCount = () => {
-    transientState.colonyCount ++
-}
-
-export const decreaseCount = () => {
-    transientState.facilityCount --
+    facilityState.count = facilityCount
 }
 
 
-export const purchaseMineral = () => {
-    /*
+export const purchaseMineral = async () => {
+   const colonies = await fetch(`http://localhost:8088/colonyMinerals?colonyId=${colonyState.colonyId}`).then(res => res.json())
+   const facilities = await fetch(`http://localhost:8088/facilityMinerals?facilityId=${facilityState.facilityId}`).then(res => res.json())
+
+   const existingMineral = colonies.find(colony => colony.mineralId === colonyState.mineralId)
+
+    if (existingMineral) {
+        colonyOptions = {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                ...existingMineral,
+                count: existingMineral.count ++
+            })
+        }
+    }else {
+        colonyOptions = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(colonyState)
+        }
+    }
+
+    facilityOptions = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            ...facilities,
+            count: facilityState.count --
+        })
+    }
+    //document.dispatchEvent(new CustomEvent("facilityChanged"))
+    //document.dispatchEvent(new CustomEvent)("colonyChanged")
+}
+
+
+ /*
         Does the chosen governor's colony already own some of this mineral?
             - If yes, what should happen?
             - If no, what should happen?
@@ -51,7 +86,3 @@ export const purchaseMineral = () => {
         Only the foolhardy try to solve this problem with code.
     */
 
-
-
-    document.dispatchEvent(new CustomEvent("stateChanged"))
-}
