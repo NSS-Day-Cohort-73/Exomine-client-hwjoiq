@@ -17,7 +17,7 @@ export const renderHtml = async () => {
                         Choose a governor ${governorList}
                     </section>
 
-                    <section id="facility__dropdown">
+                    <section id="facility_dropdown">
                         Choose a facility ${facilityList}
                     </section>
                 </article>
@@ -31,7 +31,7 @@ export const renderHtml = async () => {
             <div id="facility__cart">
                 <article>
                     <h3 id="facility__name">Facility Minerals</h3>
-                    ${/*Mineral Radio Buttons*/ ''}
+                    <section id="facility_minerals"></section>
                 </article>
 
                 <article id="space__cart">
