@@ -7,11 +7,14 @@ export const renderFacilityMinerals = async (facilityId) => {
        
          document.addEventListener("change", mineralChoice)
 
+         
+
     let mineralsHtml = facilityMinerals.map(mineral => {
+        const disableBtn = parseInt(mineral.count) === 0 ? `disabled`: ''
         return `
             <div>
                 <input type="radio" name="mineral" id="mineral-${mineral.mineral.id}" value="${mineral.mineral.id}" 
-                data-mineralname="${mineral.mineral.name}" data-facilityname="${mineral.facility.name}" data-mineralcount="${mineral.count}">
+                data-mineralname="${mineral.mineral.name}" data-facilityname="${mineral.facility.name}" data-mineralcount="${mineral.count}" ${disableBtn}>
                 ${mineral.count} tons of ${mineral.mineral.name}
             </div>`;
     }).join("");
