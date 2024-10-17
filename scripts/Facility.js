@@ -1,4 +1,5 @@
 import { displayFacilityMinerals } from "./FacilityMinerals.js"; 
+import { setFacility } from "./TransientState.js";
 
 // Define the facilityChoice function
 const facilityChoice = async (event) => {
@@ -6,6 +7,7 @@ const facilityChoice = async (event) => {
         const facilityId = event.target.value;
         // Call displayFacilityMinerals function to render the minerals and update the title
         await displayFacilityMinerals(facilityId);
+        setFacility(event.target.value)
     }
 };
 

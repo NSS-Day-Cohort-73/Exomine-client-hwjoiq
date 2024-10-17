@@ -1,7 +1,6 @@
 const colonyState = {
     colonyId: 0,
     mineralId: 0,
-    count: 0
 }
 
 const facilityState = {
@@ -21,10 +20,12 @@ export const setColony = (colonyId) => {
 export const setMineral = (mineralId) => {
     colonyState.mineralId = mineralId
     facilityState.mineralId = mineralId
+    console.log(facilityState)
 }
 
 export const colonyCount = (colonyCount) => {
     colonyState.count = colonyCount
+    console.log(colonyState)
 }
 
 export const facilityCount = (facilityCount) => {
@@ -37,38 +38,46 @@ export const purchaseMineral = async () => {
    const facilities = await fetch(`http://localhost:8088/facilityMinerals?facilityId=${facilityState.facilityId}`).then(res => res.json())
 
    const existingMineral = colonies.find(colony => colony.mineralId === colonyState.mineralId)
+   const matchedFacilityMineral = facilities.find(facility => facility.mineralId === facilityState.mineralId)
 
     if (existingMineral) {
-        colonyOptions = {
+        const colonyOptions = {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 ...existingMineral,
-                count: existingMineral.count ++
+                count: existingMineral.count + 1
             })
         }
+        await fetch(`http://localhost:8088/colonyMinerals/${existingMineral.id}`, colonyOptions)
     }else {
-        colonyOptions = {
+        const colonyOptions = {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(colonyState)
+            body: JSON.stringify({
+                colonyId: colonyState.colonyId,
+                mineralId: colonyState.mineralId,
+                count: 1 })
         }
+       const response = await fetch("http://localhost:8088/colonyMinerals", colonyOptions)
     }
 
-    facilityOptions = {
+     const facilityOptions = {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            ...facilities,
-            count: facilityState.count --
+            ...matchedFacilityMineral,
+            count: matchedFacilityMineral.count - 1
         })
     }
+    const response = await fetch("http://localhost:8088/facilityMinerals", facilityOptions)
+    
     //document.dispatchEvent(new CustomEvent("facilityChanged"))
     //document.dispatchEvent(new CustomEvent)("colonyChanged")
 }

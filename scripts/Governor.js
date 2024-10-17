@@ -19,6 +19,7 @@ export const renderGovernors = async () => {
 const governorChoice = async (changeEvent) => {
     const changeTarget = changeEvent.target
     const colonyMinerals = document.getElementById("colony__minerals")
+    
     if (changeTarget.name === "governors") {
         const selectedGovernor = changeTarget.options[changeTarget.selectedIndex]
         const governorData = {
