@@ -36,7 +36,7 @@ export const renderHtml = async () => {
 
                 <article id="space__cart">
                     <h3 id="cart__title">Space Cart</h3>
-                    ${/*Space Cart*/ ''}
+                    <section id="cart__contents"></section>
                     <button id="purchase__btn">Purchase Mineral</button>
                 </article>
             </div>
