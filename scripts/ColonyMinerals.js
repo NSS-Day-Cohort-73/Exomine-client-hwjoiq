@@ -5,15 +5,14 @@ export const renderColonyMinerals = async (governorData) => {
 
     const colonyTitle = document.getElementById("colony__name")
     colonyTitle.innerHTML =  `${governorData.colonyName} Minerals`
-
+    
     let colonyHtml = colonies.map((colony) => {
-        
+       
             return `
             <p>${colony.count} tons of ${colony.mineral.name}</p>`
             
     }).join("")
 
-    
     return colonyHtml
 }
 

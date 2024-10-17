@@ -1,4 +1,5 @@
 import { renderSpaceCart } from "./SpaceCart.js";
+import { facilityCount, setMineral } from "./TransientState.js";
 
 export const renderFacilityMinerals = async (facilityId) => {
     const facilityMinerals = await fetch(`http://localhost:8088/facilityMinerals?facilityId=${facilityId}&_expand=mineral&_expand=facility`)
@@ -10,7 +11,7 @@ export const renderFacilityMinerals = async (facilityId) => {
         return `
             <div>
                 <input type="radio" name="mineral" id="mineral-${mineral.mineral.id}" value="${mineral.mineral.id}" 
-                data-mineralname="${mineral.mineral.name}" data-facilityname="${mineral.facility.name}">
+                data-mineralname="${mineral.mineral.name}" data-facilityname="${mineral.facility.name}" data-mineralcount="${mineral.count}">
                 ${mineral.count} tons of ${mineral.mineral.name}
             </div>`;
     }).join("");
@@ -39,5 +40,7 @@ const mineralChoice = (changeEvent) => {
         const targetMineral = changeEvent.target.dataset.mineralname
         const targetFacilityName = changeEvent.target.dataset.facilityname
         renderSpaceCart(targetMineral, targetFacilityName)
+        setMineral(changeEvent.target.value)
+        facilityCount(changeEvent.target.dataset.mineralcount)
     }
 }
