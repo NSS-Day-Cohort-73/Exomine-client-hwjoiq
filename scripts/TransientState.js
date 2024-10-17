@@ -2,15 +2,15 @@ import { displayFacilityMinerals } from "./FacilityMinerals.js";
 import { renderColonyMinerals } from "./ColonyMinerals.js";
 
 export const colonyState = {
-  colonyId: 0,
-  mineralId: 0,
-};
+    colonyId: 0,
+    mineralId: 0,
+}
 
 export const facilityState = {
-  facilityId: 0,
-  mineralId: 0,
-  count: 0,
-};
+    facilityId: 0,
+    mineralId: 0,
+    count: 0
+}
 
 export const setFacility = (facilityId) => {
   facilityState.facilityId = facilityId;
