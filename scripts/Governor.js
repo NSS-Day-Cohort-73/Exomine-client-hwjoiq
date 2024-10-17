@@ -1,6 +1,19 @@
 import { renderColonyMinerals } from "./ColonyMinerals.js"
 import { setColony } from "./TransientState.js"
 
+document.addEventListener("facilityUpdated", async () => {
+    const selectedGovernor = document.querySelector("select[name='governors']").selectedOptions[0];
+    if (selectedGovernor) {
+        const governorData = {
+            id: selectedGovernor.value,
+            colonyId: selectedGovernor.dataset.colonyid,
+            colonyName: selectedGovernor.dataset.colonyname
+        };
+        const colonyMinerals = document.getElementById("colony__minerals");
+        colonyMinerals.innerHTML = await renderColonyMinerals(governorData);
+    }
+});
+
 export const renderGovernors = async () => {
     const governors = await fetch("http://localhost:8088/governors?_expand=colony").then (res => res.json())
 
