@@ -214,6 +214,18 @@
       "mineralId": "3",
       "count": 1,
       "id": 16
+    },
+    {
+      "colonyId": "4",
+      "mineralId": "1",
+      "count": 2,
+      "id": 17
+    },
+    {
+      "colonyId": "4",
+      "mineralId": "3",
+      "count": 1,
+      "id": 18
     }
   ],
   "facilityMinerals": [
@@ -227,7 +239,7 @@
       "id": 2,
       "facilityId": 4,
       "mineralId": 3,
-      "count": 8
+      "count": 7
     },
     {
       "id": 3,
@@ -269,7 +281,7 @@
       "id": 9,
       "facilityId": 4,
       "mineralId": 1,
-      "count": 9
+      "count": 7
     },
     {
       "id": 10,
