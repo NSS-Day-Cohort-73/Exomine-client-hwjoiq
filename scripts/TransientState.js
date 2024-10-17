@@ -40,7 +40,7 @@ export const purchaseMineral = async () => {
     const colonies = await fetch(`http://localhost:8088/colonyMinerals?colonyId=${colonyState.colonyId}`).then(res => res.json());
     const facilities = await fetch(`http://localhost:8088/facilityMinerals?facilityId=${facilityState.facilityId}&mineralId=${facilityState.mineralId}`).then(res => res.json());
  
-    const existingMineral = colonies.find(colony => colony.mineralId === colonyState.mineralId);
+    const existingMineral = colonies.find(colony => parseInt(colony.mineralId) == colonyState.mineralId);
  
     if (existingMineral) {
         const colonyOptions = {
@@ -50,7 +50,7 @@ export const purchaseMineral = async () => {
             },
             body: JSON.stringify({
                 ...existingMineral,
-                count: parseInt(existingMineral.count) + 1
+                count: existingMineral.count + 1
             })
         };
         await fetch(`http://localhost:8088/colonyMinerals/${existingMineral.id}`, colonyOptions);
