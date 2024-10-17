@@ -1,20 +1,14 @@
-import { renderSpaceCart } from "./SpaceCart.js";
-import { facilityCount, setMineral } from "./TransientState.js";
-
 export const renderFacilityMinerals = async (facilityId) => {
-    const facilityMinerals = await fetch(`http://localhost:8088/facilityMinerals?facilityId=${facilityId}&_expand=mineral&_expand=facility`)
+    const facilityMinerals = await fetch(`http://localhost:8088/facilityMinerals?facilityId=${facilityId}&_expand=mineral`)
         .then(res => res.json());
-       
-         document.addEventListener("change", mineralChoice)
 
     let mineralsHtml = facilityMinerals.map(mineral => {
 
-        const disableBtn = mineral.count === 0 ? 'disabled' : ''
+        const disableBtn = parseInt(mineral.count) === 0 ? 'disabled' : ''
 
         return `
             <div>
-                <input type="radio" name="mineral" id="mineral-${mineral.mineral.id}" value="${mineral.mineral.id}" 
-                data-mineralname="${mineral.mineral.name}" data-facilityname="${mineral.facility.name}" data-mineralcount="${mineral.count}">
+                <input type="radio" name="mineral" id="mineral-${mineral.mineral.id}" value="${mineral.mineral.id}" ${disableBtn}>
                 ${mineral.count} tons of ${mineral.mineral.name}
             </div>`;
     }).join("");
@@ -37,13 +31,3 @@ export const displayFacilityMinerals = async (facilityId) => {
     mineralsSection.innerHTML = await renderFacilityMinerals(facilityId);
 };
 
-
-const mineralChoice = (changeEvent) => {
-    if (changeEvent.target.name === "mineral") {
-        const targetMineral = changeEvent.target.dataset.mineralname
-        const targetFacilityName = changeEvent.target.dataset.facilityname
-        renderSpaceCart(targetMineral, targetFacilityName)
-        setMineral(changeEvent.target.value)
-        facilityCount(changeEvent.target.dataset.mineralcount)
-    }
-}
