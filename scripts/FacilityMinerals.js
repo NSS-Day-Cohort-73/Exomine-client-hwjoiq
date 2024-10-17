@@ -4,7 +4,7 @@ export const renderFacilityMinerals = async (facilityId) => {
 
     let mineralsHtml = facilityMinerals.map(mineral => {
 
-        const disableBtn = mineral.count === 0 ? 'disabled' : ''
+        const disableBtn = parseInt(mineral.count) === 0 ? 'disabled' : ''
 
         return `
             <div>
