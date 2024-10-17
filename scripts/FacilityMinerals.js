@@ -8,7 +8,7 @@ export const renderFacilityMinerals = async (facilityId) => {
 
         return `
             <div>
-                <input type="radio" name="mineral" id="mineral-${mineral.mineral.id}" value="${mineral.mineral.id}">
+                <input type="radio" name="mineral" id="mineral-${mineral.mineral.id}" value="${mineral.mineral.id}" ${disableBtn}>
                 ${mineral.count} tons of ${mineral.mineral.name}
             </div>`;
     }).join("");
