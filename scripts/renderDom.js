@@ -29,7 +29,7 @@ export const renderHtml = async () => {
             </div> 
 
             <div id="facility__cart">
-                <article>
+                <article id="facility__content">
                     <h3 id="facility__name">Facility Minerals</h3>
                     <section id="facility_minerals"></section>
                 </article>
