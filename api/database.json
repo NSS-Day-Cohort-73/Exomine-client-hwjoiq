@@ -182,7 +182,7 @@
     {
       "colonyId": "1",
       "mineralId": "1",
-      "count": 11,
+      "count": 12,
       "id": 11
     },
     {
@@ -206,7 +206,7 @@
     {
       "colonyId": "1",
       "mineralId": "2",
-      "count": 4,
+      "count": 5,
       "id": 15
     },
     {
@@ -226,6 +226,12 @@
       "mineralId": "3",
       "count": 1,
       "id": 18
+    },
+    {
+      "colonyId": "2",
+      "mineralId": "4",
+      "count": 1,
+      "id": 19
     }
   ],
   "facilityMinerals": [
@@ -263,7 +269,7 @@
       "id": 6,
       "facilityId": 3,
       "mineralId": 4,
-      "count": 9
+      "count": 8
     },
     {
       "id": 7,
@@ -281,13 +287,13 @@
       "id": 9,
       "facilityId": 4,
       "mineralId": 1,
-      "count": 7
+      "count": 6
     },
     {
       "id": 10,
       "facilityId": 3,
       "mineralId": 2,
-      "count": 12
+      "count": 11
     }
   ]
 }

@@ -1,5 +1,6 @@
 import { displayFacilityMinerals } from "./FacilityMinerals.js"; 
-import { setFacility } from "./TransientState.js";
+import { renderSpaceCart } from "./SpaceCart.js";
+import { facilityState, setFacility, setMineral } from "./TransientState.js";
 
 // Define the facilityChoice function
 const facilityChoice = async (event) => {
@@ -8,6 +9,14 @@ const facilityChoice = async (event) => {
         // Call displayFacilityMinerals function to render the minerals and update the title
         await displayFacilityMinerals(facilityId);
         setFacility(event.target.value)
+    }
+    const facilityTitle = document.getElementById("facility__name")
+    const cartContents = document.getElementById("cart__contents")
+    if (event.target.value === "0") {
+        facilityTitle.innerHTML = "Facility Minerals"
+        setFacility(0)
+        setMineral(0)
+        cartContents.innerHTML = ""
     }
 };
 
@@ -20,7 +29,7 @@ export const renderFacilities = async () => {
         .then(res => res.json());
 
     let facilitiesHtml = `<select name="facilities" id="facilitySelect"> 
-                            <option value="">Choose a Facility...</option>`;
+                            <option value="0">Choose a Facility...</option>`;
 
     facilitiesHtml += facilities.map(facility => {
         return `<option value="${facility.id}" ${facility.activeStatus ? '' : 'disabled'}>

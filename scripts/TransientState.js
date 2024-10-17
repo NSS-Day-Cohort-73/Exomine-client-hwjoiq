@@ -1,12 +1,12 @@
 import { displayFacilityMinerals } from "./FacilityMinerals.js"
 import { renderColonyMinerals } from "./ColonyMinerals.js"
 
-const colonyState = {
+export const colonyState = {
     colonyId: 0,
     mineralId: 0,
 }
 
-const facilityState = {
+export const facilityState = {
     facilityId: 0,
     mineralId: 0,
     count: 0

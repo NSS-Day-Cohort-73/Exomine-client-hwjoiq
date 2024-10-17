@@ -1,5 +1,5 @@
 import { renderColonyMinerals } from "./ColonyMinerals.js"
-import { setColony } from "./TransientState.js"
+import { colonyState, setColony } from "./TransientState.js"
 
 document.addEventListener("facilityUpdated", async () => {
     const selectedGovernor = document.querySelector("select[name='governors']").selectedOptions[0];
@@ -19,7 +19,7 @@ export const renderGovernors = async () => {
 
     document.addEventListener("change", governorChoice)
     
-    let governorsHtml = `<select name="governors"> <option value="">Choose a Governor...</option>`
+    let governorsHtml = `<select name="governors"> <option value="0">Choose a Governor...</option>`
 
     governorsHtml += governors.filter(governor => governor.activeStatus).map((governor) => {
         return `<option data-colonyid="${governor.colonyId}" data-colonyname="${governor.colony.name}" value="${governor.id}">${governor.name}</option>`
@@ -42,5 +42,10 @@ const governorChoice = async (changeEvent) => {
         }
         colonyMinerals.innerHTML = await renderColonyMinerals(governorData)
         setColony(governorData.colonyId)
+    }
+    const colonyTitle = document.getElementById("colony__name")
+    if (changeTarget.value === "0") {
+        colonyTitle.innerHTML = "Colony Minerals"
+        setColony(0)
     }
 }
