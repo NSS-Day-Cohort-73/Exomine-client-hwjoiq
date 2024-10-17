@@ -184,6 +184,11 @@
       "mineralId": "4",
       "count": 1,
       "id": "ih27fc3"
+    },
+    {
+      "mineralId": "1",
+      "count": 1,
+      "id": "G2JKwzs"
     }
   ],
   "facilityMinerals": [
@@ -191,7 +196,7 @@
       "id": "1",
       "facilityId": "1",
       "mineralId": "1",
-      "count": "12"
+      "count": 11
     },
     {
       "id": "2",

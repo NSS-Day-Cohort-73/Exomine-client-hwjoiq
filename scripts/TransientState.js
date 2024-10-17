@@ -1,9 +1,9 @@
-const colonyState = {
+export const colonyState = {
     colonyId: 0,
     mineralId: 0,
 }
 
-const facilityState = {
+export const facilityState = {
     facilityId: 0,
     mineralId: 0,
     count: 0
