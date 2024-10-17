@@ -1,3 +1,6 @@
+import { displayFacilityMinerals } from "./FacilityMinerals.js"
+import { renderColonyMinerals } from "./ColonyMinerals.js"
+
 export const colonyState = {
     colonyId: 0,
     mineralId: 0,
@@ -34,11 +37,11 @@ export const facilityCount = (facilityCount) => {
 
 
 export const purchaseMineral = async () => {
-   const colonies = await fetch(`http://localhost:8088/colonyMinerals?colonyId=${colonyState.colonyId}`).then(res => res.json())
-   const facilities = await fetch(`http://localhost:8088/facilityMinerals?facilityId=${facilityState.facilityId}&mineralId=${facilityState.mineralId}`).then(res => res.json())
-
-   const existingMineral = colonies.find(colony => colony.mineralId === colonyState.mineralId)
-
+    const colonies = await fetch(`http://localhost:8088/colonyMinerals?colonyId=${colonyState.colonyId}`).then(res => res.json());
+    const facilities = await fetch(`http://localhost:8088/facilityMinerals?facilityId=${facilityState.facilityId}&mineralId=${facilityState.mineralId}`).then(res => res.json());
+ 
+    const existingMineral = colonies.find(colony => colony.mineralId === colonyState.mineralId);
+ 
     if (existingMineral) {
         const colonyOptions = {
             method: "PUT",
@@ -49,9 +52,9 @@ export const purchaseMineral = async () => {
                 ...existingMineral,
                 count: parseInt(existingMineral.count) + 1
             })
-        }
-        await fetch(`http://localhost:8088/colonyMinerals/${existingMineral.id}`, colonyOptions)
-    }else {
+        };
+        await fetch(`http://localhost:8088/colonyMinerals/${existingMineral.id}`, colonyOptions);
+    } else {
         const colonyOptions = {
             method: "POST",
             headers: {
@@ -60,11 +63,13 @@ export const purchaseMineral = async () => {
             body: JSON.stringify({
                 colonyId: colonyState.colonyId,
                 mineralId: colonyState.mineralId,
-                count: 1 })
-        }
-       const response = await fetch("http://localhost:8088/colonyMinerals", colonyOptions)
+                count: 1
+            })
+        };
+        await fetch("http://localhost:8088/colonyMinerals", colonyOptions);
     }
-    const facilityMineral = facilities[0]
+ 
+    const facilityMineral = facilities[0];
     const facilityOptions = {
         method: "PUT",
         headers: {
@@ -74,9 +79,12 @@ export const purchaseMineral = async () => {
             ...facilityMineral,
             count: parseInt(facilityMineral.count) - 1
         })
-    }
-    const response = await fetch(`http://localhost:8088/facilityMinerals/${facilityMineral.id}`, facilityOptions)
+    };
+    await fetch(`http://localhost:8088/facilityMinerals/${facilityMineral.id}`, facilityOptions);
+ 
+
+    await displayFacilityMinerals(facilityState.facilityId);
     
-    //document.dispatchEvent(new CustomEvent("facilityChanged"))
-    //document.dispatchEvent(new CustomEvent)("colonyChanged")
-}
+    document.dispatchEvent(new CustomEvent("facilityUpdated"));
+   
+ };
