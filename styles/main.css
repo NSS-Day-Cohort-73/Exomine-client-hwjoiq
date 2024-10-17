@@ -1,0 +1,43 @@
+header {
+    margin-bottom: 50px;
+    margin-left: 10px;
+}
+
+#choices__colony {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 50px;
+}
+
+#facility__cart {
+    display: flex;
+    justify-content: space-around;
+}
+
+#governor__dropdown {
+    margin-bottom: 50px;
+}
+
+#facility__content {
+    text-align: center;
+    border: 2px dotted purple;
+    width: 70%;
+    padding-bottom: 50px;
+}
+
+#space__cart {
+    text-align: center;
+    border: 2px dotted green;
+    width: 25%;
+}
+
+#purchase__btn {
+    width: 80px;
+    height: 50px;
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+#colony__name {
+    font-size: x-large;
+}
