@@ -182,8 +182,20 @@
     {
       "colonyId": "3",
       "mineralId": "1",
-      "count": 4,
-      "id": "JAoum-B"
+      "count": 2,
+      "id": 17
+    },
+    {
+      "colonyId": "4",
+      "mineralId": "3",
+      "count": 1,
+      "id": 18
+    },
+    {
+      "colonyId": "2",
+      "mineralId": "4",
+      "count": 1,
+      "id": 19
     }
   ],
   "facilityMinerals": [
@@ -221,7 +233,7 @@
       "id": 6,
       "facilityId": 3,
       "mineralId": 4,
-      "count": 28
+      "count": 8
     },
     {
       "id": 7,

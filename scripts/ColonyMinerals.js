@@ -1,18 +1,37 @@
-import { colonyCount } from "./TransientState.js"
+import { colonyCount } from "./TransientState.js";
 
 export const renderColonyMinerals = async (governorData) => {
-    const colonies = await fetch(`http://localhost:8088/colonyMinerals?colonyId=${governorData.colonyId}&_expand=mineral`).then(res => res.json())
+  try {
+    // Updated fetch URL to match Web API endpoint
+    const colonies = await fetch(
+      `http://localhost:5000/colonyMinerals?colonyId=${governorData.colonyId}`
+    ).then((res) => res.json());
 
-    const colonyTitle = document.getElementById("colony__name")
-    colonyTitle.innerHTML =  `${governorData.colonyName} Minerals`
-    
-    let colonyHtml = colonies.map((colony) => {
-       
-            return `
-            <p>${colony.count} tons of ${colony.mineral.name}</p>`
-            
-    }).join("")
+    // Update colony title
+    const colonyTitle = document.getElementById("colony__name");
+    colonyTitle.innerHTML = `${governorData.colonyName} Minerals`;
 
-    return colonyHtml
-}
+    // Since the API doesn't expand mineral by default, we'll need to fetch minerals separately
+    const minerals = await fetch("http://localhost:5000/minerals").then((res) =>
+      res.json()
+    );
 
+    // Generate HTML by matching mineralId with minerals data
+    const colonyHtml = colonies
+      .map((colony) => {
+        const mineral = minerals.find((m) => m.id === colony.mineralId);
+        if (mineral) {
+          return `<p>${colony.count} tons of ${mineral.name}</p>`;
+        } else {
+          console.warn("Mineral data is missing for colony:", colony);
+          return `<p>${colony.count} tons of an unknown mineral</p>`;
+        }
+      })
+      .join("");
+
+    return colonyHtml;
+  } catch (error) {
+    console.error("Error rendering colony minerals:", error);
+    return `<p>Error loading colony minerals</p>`;
+  }
+};

@@ -2,48 +2,56 @@ import { renderSpaceCart } from "./SpaceCart.js";
 import { facilityCount, setMineral } from "./TransientState.js";
 
 export const renderFacilityMinerals = async (facilityId) => {
-    const facilityMinerals = await fetch(`http://localhost:8088/facilityMinerals?facilityId=${facilityId}&_expand=mineral&_expand=facility`)
-        .then(res => res.json());
-       
-         document.addEventListener("change", mineralChoice)
+  // Fetch facility minerals and minerals separately since expand isn't available
+  const [facilityMinerals, minerals, facilities] = await Promise.all([
+    fetch(
+      `http://localhost:5000/facilityMinerals?facilityId=${facilityId}`
+    ).then((res) => res.json()),
+    fetch(`http://localhost:5000/minerals`).then((res) => res.json()),
+    fetch(`http://localhost:5000/facilities`).then((res) => res.json()),
+  ]);
 
-         
+  document.addEventListener("change", mineralChoice);
 
-    let mineralsHtml = facilityMinerals.map(mineral => {
-        const disableBtn = parseInt(mineral.count) === 0 ? `disabled`: ''
-        return `
+  let mineralsHtml = facilityMinerals
+    .map((facilityMineral) => {
+      const mineral = minerals.find((m) => m.id === facilityMineral.mineralId);
+      const facility = facilities.find(
+        (f) => f.id === facilityMineral.facilityId
+      );
+
+      return `
             <div>
-                <input type="radio" name="mineral" id="mineral-${mineral.mineral.id}" value="${mineral.mineral.id}" 
-                data-mineralname="${mineral.mineral.name}" data-facilityname="${mineral.facility.name}" data-mineralcount="${mineral.count}" ${disableBtn}>
-                ${mineral.count} tons of ${mineral.mineral.name}
+                <input type="radio" name="mineral" id="mineral-${mineral.id}" value="${mineral.id}" 
+                data-mineralname="${mineral.name}" data-facilityname="${facility.name}" data-mineralcount="${facilityMineral.count}">
+                ${facilityMineral.count} tons of ${mineral.name}
             </div>`;
-    }).join("");
+    })
+    .join("");
 
-    return mineralsHtml;
+  return mineralsHtml;
 };
 
 // This function will render the minerals to the DOM
 export const displayFacilityMinerals = async (facilityId) => {
-    // Fetch the facility details to get the name
-    const facility = await fetch(`http://localhost:8088/facilities/${facilityId}`)
-        .then(res => res.json());
+  // Fetch facility details
+  const facility = await fetch(
+    `http://localhost:5000/facilities/${facilityId}`
+  ).then((res) => res.json());
 
-    // Set the facility title dynamically
-    const facilityTitle = document.getElementById("facility__name");
-    facilityTitle.innerHTML = `Facility Minerals for ${facility.name}`;
+  const facilityTitle = document.getElementById("facility__name");
+  facilityTitle.innerHTML = `Facility Minerals for ${facility.name}`;
 
-    // Get the minerals for the selected facility and render them
-    const mineralsSection = document.getElementById("facility_minerals");
-    mineralsSection.innerHTML = await renderFacilityMinerals(facilityId);
+  const mineralsSection = document.getElementById("facility_minerals");
+  mineralsSection.innerHTML = await renderFacilityMinerals(facilityId);
 };
 
-
 const mineralChoice = (changeEvent) => {
-    if (changeEvent.target.name === "mineral") {
-        const targetMineral = changeEvent.target.dataset.mineralname
-        const targetFacilityName = changeEvent.target.dataset.facilityname
-        renderSpaceCart(targetMineral, targetFacilityName)
-        setMineral(changeEvent.target.value)
-        facilityCount(changeEvent.target.dataset.mineralcount)
-    }
-}
+  if (changeEvent.target.name === "mineral") {
+    const targetMineral = changeEvent.target.dataset.mineralname;
+    const targetFacilityName = changeEvent.target.dataset.facilityname;
+    renderSpaceCart(targetMineral, targetFacilityName);
+    setMineral(changeEvent.target.value);
+    facilityCount(changeEvent.target.dataset.mineralcount);
+  }
+};
