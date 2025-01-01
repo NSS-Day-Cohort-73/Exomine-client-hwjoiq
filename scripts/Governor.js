@@ -23,9 +23,7 @@ export const renderGovernors = async () => {
 
   document.addEventListener("change", governorChoice);
 
-    governorsHtml += governors.filter(governor => governor.activeStatus).map((governor) => {
-        return `<option data-colonyid="${governor.colonyId}" data-colonyname="${governor.colonyName}" value="${governor.id}">${governor.name}</option>`
-        }).join("") 
+  let governorsHtml = `<select name="governors"> <option value="0">Choose a Governor...</option>`;
 
   governorsHtml += governors
     .filter((governor) => governor.activeStatus)
