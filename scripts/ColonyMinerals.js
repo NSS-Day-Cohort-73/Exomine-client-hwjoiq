@@ -1,10 +1,9 @@
-import { colonyCount } from "./TransientState.js";
+import { API_BASE_URL } from "./config.js";
 
 export const renderColonyMinerals = async (governorData) => {
   try {
-    // Updated fetch URL to match Web API endpoint
     const colonies = await fetch(
-      `http://localhost:5000/colonyMinerals?colonyId=${governorData.colonyId}`
+      `${API_BASE_URL}/colonyMinerals?colonyId=${governorData.colonyId}`
     ).then((res) => res.json());
 
     // Update colony title

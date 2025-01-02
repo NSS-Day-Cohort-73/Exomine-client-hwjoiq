@@ -1,5 +1,6 @@
 import { renderColonyMinerals } from "./ColonyMinerals.js";
 import { colonyState, setColony } from "./TransientState.js";
+import { API_BASE_URL } from "./config.js";
 
 document.addEventListener("facilityUpdated", async () => {
   const selectedGovernor = document.querySelector("select[name='governors']")
@@ -17,8 +18,8 @@ document.addEventListener("facilityUpdated", async () => {
 
 export const renderGovernors = async () => {
   const [governors, colonies] = await Promise.all([
-    fetch("http://localhost:5000/governors").then((res) => res.json()),
-    fetch("http://localhost:5000/colonies").then((res) => res.json()),
+    fetch(`${API_BASE_URL}/governors`).then((res) => res.json()),
+    fetch(`${API_BASE_URL}/colonies`).then((res) => res.json()),
   ]);
 
   document.addEventListener("change", governorChoice);

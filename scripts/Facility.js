@@ -1,6 +1,7 @@
 import { displayFacilityMinerals } from "./FacilityMinerals.js";
 import { renderSpaceCart } from "./SpaceCart.js";
 import { facilityState, setFacility, setMineral } from "./TransientState.js";
+import { API_BASE_URL } from "./config.js";
 
 // Define the facilityChoice function
 const facilityChoice = async (event) => {
@@ -23,8 +24,8 @@ const facilityChoice = async (event) => {
 document.addEventListener("change", facilityChoice);
 
 export const renderFacilities = async () => {
-  const facilities = await fetch("http://localhost:5000/facilities").then(
-    (res) => res.json()
+  const facilities = await fetch(`${API_BASE_URL}/facilities`).then((res) =>
+    res.json()
   );
 
   let facilitiesHtml = `<select name="facilities" id="facilitySelect"> 
